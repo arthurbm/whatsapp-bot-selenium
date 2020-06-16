@@ -23,7 +23,7 @@ def fazer_dados():
 #LEMBRA DE COLOCAR O ÍNDICE DO PRIMEIRO NOME COMO 2
 Tk().withdraw() #Keep the root window from appearing
 filepath_global = askopenfile()
-filepath_name = string(filepath_global.name)
+filepath_name = filepath_global.name
 print(filepath_name)
 nomes = fazer_dados()
 enviarmsg_loja(['Mãe', 'Tio Júnior'], filepath_name)
