@@ -3,3 +3,7 @@ env_wpp4
 .vscode
 
 mr01_4.VCF
+
+env_whatsapp
+
+__pycache__

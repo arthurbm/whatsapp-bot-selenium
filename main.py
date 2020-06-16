@@ -1,4 +1,6 @@
-from bot_whatsapp import *
+from bot_whatsapp import WhatsappBot, pd, date
+from tkinter import Tk
+from tkinter.filedialog import askopenfile
 def enviarmsg_loja(nomes, filepath=None):
     bot = WhatsappBot()
     if filepath == None:
@@ -12,13 +14,16 @@ def enviarmsg_loja(nomes, filepath=None):
 
 
 def fazer_dados():
-    df = pd.read_csv('planilhaVCF2.csv' ,encoding='latin-1', sep=';')
+    df = pd.read_csv('sheets/planilhaVCF2.csv' ,encoding='latin-1', sep=';')
 
     nomes_completos = (df['NOME E SOBRENOME'].tolist())[158:]
 
     return nomes_completos
 
 #LEMBRA DE COLOCAR O ÍNDICE DO PRIMEIRO NOME COMO 2
-filepath_global = r'C:\\Users\\arthu\\OneDrive\\Documentos\\PYTHON CODE\\automacaoWPP\\cheeseburguer_do_bem.jpeg'
+Tk().withdraw() #Keep the root window from appearing
+filepath_global = askopenfile()
+filepath_name = string(filepath_global.name)
+print(filepath_name)
 nomes = fazer_dados()
-enviarmsg_loja(nomes)
+enviarmsg_loja(['Mãe', 'Tio Júnior'], filepath_name)

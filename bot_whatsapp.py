@@ -6,6 +6,7 @@ from pandas import ExcelFile
 import textwrap
 import time
 from datetime import date
+import traceback
 
 def enter_wpp():
     return (Keys.SHIFT + Keys.ENTER) + Keys.SHIFT
@@ -15,30 +16,9 @@ class WhatsappBot:
     def __init__(self):
         # Parte 1 - A mensagem que você quer enviar
         # Parte 2 - Nome dos grupos ou pessoas a quem você deseja enviar a mensagem
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(executable_path='./chromedriver.exe')
         self.driver.get('https://web.whatsapp.com')
         self.count_mensagens = 0
-
-    def enviarMensagens(self,nomes,mensagem):
-        time.sleep(20)
-        for nome in nomes:
-            icone_pesquisa = self.driver.find_element_by_xpath("//span[@data-icon='search']")
-            icone_pesquisa.click()
-            time.sleep(2)
-            campo_pesquisa = self.driver.find_element_by_xpath('//*[@id="side"]/div[1]/div/label/div/div[2]')
-            campo_pesquisa.click()
-            campo_pesquisa.send_keys(nome)
-            time.sleep(2)
-            campo_grupo = self.driver.find_element_by_xpath(f"//span[@title='{nome}'][@class='_1wjpf _3NFp9 _3FXB1']")
-            campo_grupo.click()
-            time.sleep(2)
-            chat_box = self.driver.find_element_by_class_name('_1Plpp')
-            chat_box.click()
-            chat_box.send_keys(mensagem)
-            time.sleep(6)
-            botao_enviar = self.driver.find_element_by_xpath("//span[@data-icon='send']")
-            botao_enviar.click()
-            time.sleep(5)
     
     def enviarMensagensLojas(self,nomes):
         time.sleep(20)
@@ -52,7 +32,7 @@ class WhatsappBot:
                 campo_pesquisa.click()
                 campo_pesquisa.send_keys(nome)
                 time.sleep(2)
-                campo_grupo = self.driver.find_element_by_xpath(f"//span[@title='{nome}'][@class='_1wjpf _3NFp9 _3FXB1']")
+                campo_grupo = self.driver.find_element_by_xpath(f"//span[@title='{nome}'][@class='_3ko75 _5h6Y_ _3Whw5']")
                 campo_grupo.click()
                 time.sleep(3)
                 chat_box = self.driver.find_element_by_class_name('_1Plpp')
@@ -105,10 +85,11 @@ class WhatsappBot:
                 campo_pesquisa.click()
                 campo_pesquisa.send_keys(nome)
                 time.sleep(2)
-                campo_grupo = self.driver.find_element_by_xpath(f"//span[@title='{nome}'][@class='_1wjpf _3NFp9 _3FXB1']")
+                campo_grupo = self.driver.find_element_by_xpath(f"//span[@title='{nome}'][@class='_3ko75 _5h6Y_ _3Whw5']")
+                print(campo_grupo)
                 campo_grupo.click()
                 time.sleep(3)
-                chat_box = self.driver.find_element_by_class_name('_1Plpp')
+                chat_box = self.driver.find_element_by_class_name('_3uMse')
                 chat_box.click()
                 mensagem = (
                     textwrap.dedent(
@@ -149,7 +130,8 @@ class WhatsappBot:
 
                 time.sleep(3)
                 self.count_mensagens += 1
-            except:
+            except Exception:
+                traceback.print_exc()
                 continue
             
 
