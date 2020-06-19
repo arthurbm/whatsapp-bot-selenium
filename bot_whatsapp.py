@@ -24,7 +24,7 @@ class WhatsappBot:
         time.sleep(20)
         for nome in nomes:
             try:
-                primeiro_nome = ((nome.split())[2]).capitalize()
+                primeiro_nome = ((nome.split())[0]).capitalize()
                 icone_pesquisa = self.driver.find_element_by_xpath("//span[@data-icon='search']")
                 icone_pesquisa.click()
                 time.sleep(2)
@@ -33,40 +33,34 @@ class WhatsappBot:
                 campo_pesquisa.send_keys(nome)
                 time.sleep(2)
                 campo_grupo = self.driver.find_element_by_xpath(f"//span[@title='{nome}'][@class='_3ko75 _5h6Y_ _3Whw5']")
+                print(campo_grupo)
                 campo_grupo.click()
                 time.sleep(3)
-                chat_box = self.driver.find_element_by_class_name('_1Plpp')
+                chat_box = self.driver.find_element_by_class_name('_3uMse')
                 chat_box.click()
                 mensagem = (
                     textwrap.dedent(
                         f"""
-                        Hey {primeiro_nome}, tá se programando pra assistir as lives do final de semana, ou vai maratonar uma série na Netflix? Vim aqui pra te lembrar que o MR HOPPY RUI BARBOSA combina com todos esses estilos e leva a revolução dos burguers e chopes artesanais até a sua casa!
+                        Olá {primeiro_nome}, tudo bem? Em comemoração ao dia Mundial do hambúrguer a MR HOPPY RUI BARBOSA está participando da campanha Cheeseburguer do bem.
 
-                        Está com saudade da gente? Mate um pouco dessa saudade escutando a nossa playlist no Spotify:
-                        http://bit.ly/MHRBspotify
+                        Que tal poder comemorar esse dia e ainda ajudar o próximo? Isso será realidade, já que a cada unidade vendida do nosso novo Cheeseburguer, será DOADO uma outra unidade para um profissional de saúde, que estão na linha de frente na luta contra o covid-19
 
-                        Faça já o seu pedido por Whatsapp (Esse mesmo) , telefone, Ifood, ou Rappi!
+                        Vamos juntos se deliciar e fazer o bem?
 
-                        WhatsApp:
+                        Faça já o seu pedido por Whatsapp !
                         https://delivery.menew.com.br/mr-hoppy-rui-barbosa
 
-                        Ifood:
-                        https://www.ifood.com.br/delivery/recife-pe/mr-hoppy-rui-barbosa-gracas/882b8026-f499-462b-994f-77cdd546a8d4
-
-                        Rappi:
-                        https://rappi.app.link/UkNOKoWPf6 (Para celulares)
-                        ou 
-                        https://www.rappi.com.br/restaurantes/mr-hoppy-rui-barbosa (Para computadores)
+                        Telefone:
+                        30973109 (Com WhatsApp)
                         """
                     )
                 )
                 mensagem = mensagem.replace('\n', enter_wpp())
+                
                 chat_box.send_keys(mensagem)
-                time.sleep(4)
+                time.sleep(5)
                 botao_enviar = self.driver.find_element_by_xpath("//span[@data-icon='send']")
                 botao_enviar.click()
-                time.sleep(3)
-                self.count_mensagens += 1
             except:
                 print(f'Nome não encontrado: {nome}')
                 with open("names_not_found.txt", "a") as myfile:
