@@ -1,4 +1,4 @@
-from bot_whatsapp2 import WhatsappBot, pd, date
+from BOT.bot_whatsapp import pd, WhatsappBot, date
 from tkinter import Tk
 from tkinter.filedialog import askopenfile
 def enviarmsg(nomes, filepath=None):
@@ -10,6 +10,9 @@ def enviarmsg(nomes, filepath=None):
 
 
 def fazer_dados():
+    #Tk().withdraw()#Keep the root window from appearing
+    #filepath_global = askopenfile()
+    #filepath_name = filepath_global.name
     df = pd.read_csv('sheets/planilhaVCF2.csv' ,encoding='latin-1', sep=';')
 
     nomes_completos = (df['NOME E SOBRENOME'].tolist())[158:]
@@ -21,8 +24,6 @@ def fazer_dados():
 Tk().withdraw()#Keep the root window from appearing
 filepath_global = askopenfile()
 filepath_name = filepath_global.name
-print(filepath_name)
-print(type(filepath_name))
 
 #nomes = fazer_dados()
 enviarmsg(['Mãe', 'Tio Júnior', 'teste' ,'Pai Tim'], filepath_name)
