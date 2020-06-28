@@ -22,49 +22,51 @@ def fazer_dados():
     return nomes_completos
 
 #LEMBRA DE COLOCAR O ÍNDICE DO PRIMEIRO NOME COMO 2
+def pedir_informacoes():
 
-opcao = int(input('Digite o número da opção escolhida para quem mandar os opcao:\n1 - Arquivo CSV\n2 - Digitar os nomes'))
+    opcao = int(input('Digite o número da opção escolhida para quem mandar os opcao:\n1 - Arquivo CSV\n2 - Digitar os nomes'))
 
-if opcao == 1:
-    contatos = fazer_dados()
-elif opcao == 2:
-    contatos = input("Digite os nomes exatamente como estão salvos nos contatos separados por uma /\nExemplo: Arthur Brito Medeiros/Pedro Medeiros/Isabela Campelo")
-#nomes = fazer_dados()
+    if opcao == 1:
+        contatos = fazer_dados()
+    elif opcao == 2:
+        contatos = input("Digite os nomes exatamente como estão salvos nos contatos separados por uma /\nExemplo: Arthur Brito Medeiros/Pedro Medeiros/Isabela Campelo")
+        contatos = contatos.split('/')
+    #nomes = fazer_dados()
 
-opcao_mensagem = int(input('O que você deseja fazer:\n1 - Enviar mensagem e arquivo\n2 - Enviar só mensagem\n3 - Enviar só arquivo'))
+    opcao_mensagem = int(input('O que você deseja fazer:\n1 - Enviar mensagem e arquivo\n2 - Enviar só mensagem\n3 - Enviar só arquivo'))
 
-bot2 = WhatsappBot()
-if opcao_mensagem == 1:
-    mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui')
-    for nome in contatos:
-        try:
-            bot2.enviarMensagensLojas(nome, mensagem)
-            bot2.enviarImagem()
+    bot2 = WhatsappBot()
+    if opcao_mensagem == 1:
+        mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui')
+        for nome in contatos:
+            try:
+                bot2.enviarMensagensLojas(nome, mensagem)
+                bot2.enviarImagem()
+                if bot2.count_erros >= 2:
+                    break
+                else:
+                    continue
+            except Exception:
+                print(f'Nome não encontrado: {nome}')
+                with open("names_not_found.txt", "a") as myfile:
+                    myfile.write(f"Pessoa não encontrada: {nome}\n")
+                continue
+
+    if opcao_mensagem == 2:
+        mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui')
+        for nome in contatos:
+            try:
+                bot2.enviarMensagensLojas(nome, mensagem)
+            except Exception:
+                print(f'Nome não encontrado: {nome}')
+                with open("names_not_found.txt", "a") as myfile:
+                    myfile.write(f"Pessoa não encontrada: {nome}\n")
+                continue
+
+    if opcao_mensagem == 1:
+        for nome in contatos:
+            bot2.enviarImagem(filepath_name)
             if bot2.count_erros >= 2:
                 break
             else:
                 continue
-        except Exception:
-            print(f'Nome não encontrado: {nome}')
-            with open("names_not_found.txt", "a") as myfile:
-                myfile.write(f"Pessoa não encontrada: {nome}\n")
-            continue
-
-if opcao_mensagem == 2:
-    mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui')
-    for nome in contatos:
-        try:
-            bot2.enviarMensagensLojas(nome, mensagem)
-        except Exception:
-            print(f'Nome não encontrado: {nome}')
-            with open("names_not_found.txt", "a") as myfile:
-                myfile.write(f"Pessoa não encontrada: {nome}\n")
-            continue
-
-if opcao_mensagem == 1:
-    for nome in contatos:
-        bot2.enviarImagem(filepath_name)
-        if bot2.count_erros >= 2:
-            break
-        else:
-            continue
