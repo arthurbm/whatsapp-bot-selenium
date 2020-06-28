@@ -1,4 +1,4 @@
-from bot_whatsapp import pd, WhatsappBot, date
+from bot_whatsapp import pd, WhatsappBot, date, time
 from tkinter import Tk
 from tkinter.filedialog import askopenfile
 def enviarmsg(nomes, filepath=None):
@@ -8,7 +8,6 @@ def enviarmsg(nomes, filepath=None):
     with open("text_stored.txt", "a") as myfile:
         myfile.write(f"Número de contatos enviados ({date.today()}) : {bot.count_mensagens}\n")
 
-filepath_name = ''
 def fazer_dados():
     print('Escolha o arquivo CSV')
     filepath_global = askopenfile()
@@ -23,50 +22,55 @@ def fazer_dados():
 
 #LEMBRA DE COLOCAR O ÍNDICE DO PRIMEIRO NOME COMO 2
 def pedir_informacoes():
+    flag = False
+    flag2 =False
+    opcao = 0
+    opcao_mensagem = 0
 
-    opcao = int(input('Digite o número da opção escolhida para quem mandar os opcao:\n1 - Arquivo CSV\n2 - Digitar os nomes'))
+    while ( (opcao != 1 and opcao != 2) or (flag == False) ):
+        opcao = int(input('Digite o número da opção escolhida para quem mandar os opcao:\n1 - Arquivo CSV\n2 - Digitar os nomes\n'))
 
-    if opcao == 1:
-        contatos = fazer_dados()
-    elif opcao == 2:
-        contatos = input("Digite os nomes exatamente como estão salvos nos contatos separados por uma /\nExemplo: Arthur Brito Medeiros/Pedro Medeiros/Isabela Campelo")
-        contatos = contatos.split('/')
-    #nomes = fazer_dados()
+        if opcao == 1:
+            contatos = fazer_dados()
+            flag = True
+        elif opcao == 2:
+            contatos = input("Digite os nomes exatamente como estão salvos nos contatos separados por uma /\nExemplo: Arthur Brito Medeiros/Pedro Medeiros/Isabela Campelo\n")
+            contatos = contatos.split('/')
+            flag = True
+        else:
+            print('Opção inválida, escolha novamente')
+        #nomes = fazer_dados()
 
-    opcao_mensagem = int(input('O que você deseja fazer:\n1 - Enviar mensagem e arquivo\n2 - Enviar só mensagem\n3 - Enviar só arquivo'))
+    while ( (opcao != 1 and opcao != 2 and opcao != 3) or (flag2 == False) ):
+        opcao_mensagem = int(input('O que você deseja fazer:\n1 - Enviar mensagem e arquivo\n2 - Enviar só mensagem\n3 - Enviar só arquivo\n'))
 
-    bot2 = WhatsappBot()
-    if opcao_mensagem == 1:
-        mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui')
-        for nome in contatos:
-            try:
-                bot2.enviarMensagensLojas(nome, mensagem)
-                bot2.enviarImagem()
-                if bot2.count_erros >= 2:
-                    break
-                else:
-                    continue
-            except Exception:
-                print(f'Nome não encontrado: {nome}')
-                with open("names_not_found.txt", "a") as myfile:
-                    myfile.write(f"Pessoa não encontrada: {nome}\n")
-                continue
+        if opcao_mensagem == 1:
+            mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui\n')
+            print('Escolha o arquivo\n')
+            filepath = askopenfile()
+            filepath_send = filepath.name
+            bot2 = WhatsappBot()
+            bot2.enviarMensagemImagem(contatos, mensagem, filepath_send)
+            flag2 =True
+            bot2.driver.quit()
 
-    if opcao_mensagem == 2:
-        mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui')
-        for nome in contatos:
-            try:
-                bot2.enviarMensagensLojas(nome, mensagem)
-            except Exception:
-                print(f'Nome não encontrado: {nome}')
-                with open("names_not_found.txt", "a") as myfile:
-                    myfile.write(f"Pessoa não encontrada: {nome}\n")
-                continue
+        elif opcao_mensagem == 2:
+            mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui\n')
+            bot2 = WhatsappBot()
+            bot2.enviarMensagens(contatos, mensagem)
+            flag2 = True
+            bot2.driver.quit()
 
-    if opcao_mensagem == 1:
-        for nome in contatos:
-            bot2.enviarImagem(filepath_name)
-            if bot2.count_erros >= 2:
-                break
-            else:
-                continue
+        elif opcao_mensagem == 3:
+            print('Escolha o arquivo')
+            filepath = askopenfile()
+            filepath_send_2 = filepath.name
+            bot2 = WhatsappBot()
+            bot2.enviarImagem(contatos, filepath_send_2)
+            flag2 = True
+            bot2.driver.quit()
+        else:
+            print('Opção inválida, escolha novamente')
+
+if __name__ == '__main__':
+    pedir_informacoes()
