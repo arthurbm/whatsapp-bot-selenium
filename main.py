@@ -1,12 +1,6 @@
 from bot_whatsapp import pd, WhatsappBot, date, time
 from tkinter import Tk
 from tkinter.filedialog import askopenfile
-def enviarmsg(nomes, filepath=None):
-    bot = WhatsappBot()
-    bot.enviarMensagensLojasImagem(nomes, filepath)
-    bot.driver.quit()
-    with open("text_stored.txt", "a") as myfile:
-        myfile.write(f"Número de contatos enviados ({date.today()}) : {bot.count_mensagens}\n")
 
 def fazer_dados():
     print('Escolha o arquivo CSV')
@@ -53,6 +47,8 @@ def pedir_informacoes():
             bot2.enviarMensagemImagem(contatos, mensagem, filepath_send)
             flag2 =True
             bot2.driver.quit()
+            with open("number_msg_send.txt", "a") as myfile:
+                myfile.write(f"Número de mensagens enviadas: {bot2.count_mensagens}\n")
 
         elif opcao_mensagem == 2:
             mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui\n')
@@ -60,6 +56,8 @@ def pedir_informacoes():
             bot2.enviarMensagens(contatos, mensagem)
             flag2 = True
             bot2.driver.quit()
+            with open("number_msg_send.txt", "a") as myfile:
+                myfile.write(f"Número de mensagens enviadas: {bot2.count_mensagens}\n")
 
         elif opcao_mensagem == 3:
             print('Escolha o arquivo')
@@ -69,6 +67,8 @@ def pedir_informacoes():
             bot2.enviarImagem(contatos, filepath_send_2)
             flag2 = True
             bot2.driver.quit()
+            with open("number_msg_send.txt", "a") as myfile:
+                myfile.write(f"Número de mensagens enviadas: {bot2.count_mensagens}\n")
         else:
             print('Opção inválida, escolha novamente')
 

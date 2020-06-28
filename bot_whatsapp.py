@@ -92,6 +92,7 @@ class WhatsappBot:
                 send_button.click()
 
                 time.sleep(3)
+                self.count_mensagens += 1
             except Exception:
                 traceback.print_exc()
                 print('Erro ao enviar a imagem')
