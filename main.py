@@ -1,4 +1,4 @@
-from bot_whatsapp import pd, WhatsappBot, date, time
+from bot_whatsapp import pd, WhatsappBot, date, time, textwrap
 from tkinter import Tk
 from tkinter.filedialog import askopenfile
 
@@ -20,9 +20,21 @@ def pedir_informacoes():
     flag2 =False
     opcao = 0
     opcao_mensagem = 0
+    mensagem_inicio = textwrap.dedent(
+            '''
+            Olá! Esse é um bot que manda mensagem automaticamentes pelo Whatsapp, como se fosse um ser humano, mas de formaautomática e ediciente.
+
+            Para se referir ao primeiro nome de uma pessoa em uma mensagem escreva o termo primeiro_nome que ele será substituído pelo primeiro nome do contato.
+
+            Exemplo: (Para um contato chamado Arthur Brito)
+            input: Olá, primeiro_nome, tudo bem?
+            Output: Olá Arthur, tudo bem?
+            '''
+        )
+    print(mensagem_inicio)
 
     while ( (opcao != 1 and opcao != 2) or (flag == False) ):
-        opcao = int(input('Digite o número da opção escolhida para quem mandar os opcao:\n1 - Arquivo CSV\n2 - Digitar os nomes\n'))
+        opcao = int(input('Digite o número da opção escolhida para o formato que você quer fornecer o nome:\n1 - Arquivo CSV\n2 - Digitar os nomes\n'))
 
         if opcao == 1:
             contatos = fazer_dados()
@@ -36,11 +48,12 @@ def pedir_informacoes():
         #nomes = fazer_dados()
 
     while ( (opcao != 1 and opcao != 2 and opcao != 3) or (flag2 == False) ):
+
         opcao_mensagem = int(input('O que você deseja fazer:\n1 - Enviar mensagem e arquivo\n2 - Enviar só mensagem\n3 - Enviar só arquivo\n'))
 
         if opcao_mensagem == 1:
             mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui\n')
-            print('Escolha o arquivo\n')
+            print('Escolha o arquivo')
             filepath = askopenfile()
             filepath_send = filepath.name
             bot2 = WhatsappBot()
