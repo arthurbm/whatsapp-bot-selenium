@@ -72,7 +72,6 @@ class WhatsappBot:
         time.sleep(18)
         for nome in nomes:
             try:
-
                 icone_pesquisa = self.driver.find_element_by_xpath("//span[@data-icon='search']")
                 icone_pesquisa.click()
                 time.sleep(2)

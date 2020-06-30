@@ -1,22 +1,33 @@
 # WhatsApp bot
 
-This bot was designed to send automatic messages, including media, to multiple people at once.
+Este bot foi projetado para enviar mensagens automáticas, incluindo mídia, para várias pessoas ao mesmo tempo.
 
-## Technologies used
+Neste código está incluso um arquivo csv_to_vcf.py, que converterá um arquivo CSV em VCF para que os contatos desejados sejam salvos no celular
+
+Ele pode ler um arquivo CSV com todos os nomes de contatos para enviar mensagens e/ou mídia para todos eles ou o usuário pode digita-los manualmente.
+(O nome da coluna com os nomes deve ser: "NOMES E SOBRENOMES")
+
+## Tecnologias usadas
 
 - Python
     - Pandas
 - Selenium webdriver
 
-## Installation
+## Instalação
 
-To download all packages create a virtual enviroment using this comand:
+Para baixar todos os pacotes, crie um virtual environment usando este comando:
 
 ```powershell
 python -m venv env_name
 ```
 
-After that, use this command to install all packages required:
+Ative o virtual enviroment:
+
+```powershell
+env_name\Scripts\Activate.ps1
+```
+
+Depois disso, use este comando para instalar todos os pacotes necessários:
 
 ```powershell
 pip install -r requirements.txt
@@ -24,4 +35,4 @@ pip install -r requirements.txt
 
 ## OBS
 
-If you're using another version of chrome other than .83, or other navigator you can download the driver and replace it with the one availble for your navigator.
+Se você estiver usando outra versão do chrome diferente de .83 ou outro navegador, você pode fazer o download do driver e substituí-lo pelo disponível para o seu navegador. Lembre-se de mudar o código na parte do bot

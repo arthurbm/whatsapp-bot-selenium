@@ -22,7 +22,7 @@ def pedir_informacoes():
     opcao_mensagem = 0
     mensagem_inicio = textwrap.dedent(
             '''
-            Olá! Esse é um bot que manda mensagem automaticamentes pelo Whatsapp, como se fosse um ser humano, mas de formaautomática e ediciente.
+            Olá! Esse é um bot que manda mensagem automaticamentes pelo Whatsapp, como se fosse um ser humano, mas de forma automática e ediciente.
 
             Para se referir ao primeiro nome de uma pessoa em uma mensagem escreva o termo primeiro_nome que ele será substituído pelo primeiro nome do contato.
 
