@@ -14,7 +14,7 @@ def colar_wpp():
 def digitarComoHumano(texto, campo):
         for letra in texto:
             campo.send_keys(letra)
-            time.sleep(randint(1,5)/1200)
+            time.sleep(randint(1,5)/900)
 class WhatsappBot:
     def __init__(self):
         # Parte 1 - A mensagem que você quer enviar
@@ -55,20 +55,19 @@ class WhatsappBot:
                     )
                 mensagem = mensagem.replace('\n', enter_wpp())
                 
-                digitarComoHumano(mensagem, chat_box)
+                chat_box.send_keys(mensagem)
                 time.sleep(5)
                 botao_enviar = self.driver.find_element_by_xpath("//span[@data-icon='send']")
                 botao_enviar.click()
                 self.count_mensagens += 1
             except Exception:
-                traceback.print_exc()
                 print('Erro ao enviar a mensagem')
                 print(f'Nome não encontrado: {nome}')
                 with open("names_not_found.txt", "a") as myfile:
                     myfile.write(f"Pessoa não encontrada: {nome}\n")
                 continue
 
-    def enviarImagem(self,nomes, image_path):
+    def enviarImagem(self,nomes, image_paths):
         time.sleep(18)
         for nome in nomes:
             try:
@@ -83,29 +82,30 @@ class WhatsappBot:
                 campo_grupo.click()
                 time.sleep(3)
 
-                time.sleep(2)
-                icone_clip = self.driver.find_element_by_xpath("//div[@title='Anexar']")
-                icone_clip.click()
-                
-                time.sleep(1)
-                icone_imagem = self.driver.find_element_by_xpath('//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
-                icone_imagem.send_keys(image_path)
+                for image_path in image_paths:
 
-                time.sleep(4)
-                send_button = self.driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/span/div/div/span')
-                send_button.click()
+                    time.sleep(2)
+                    icone_clip = self.driver.find_element_by_xpath("//div[@title='Anexar']")
+                    icone_clip.click()
+                    
+                    time.sleep(1)
+                    icone_imagem = self.driver.find_element_by_xpath('//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
+                    icone_imagem.send_keys(image_path)
 
-                time.sleep(3)
+                    time.sleep(4)
+                    send_button = self.driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/span/div/div/span')
+                    send_button.click()
+
+                    time.sleep(2)
                 self.count_mensagens += 1
             except Exception:
-                traceback.print_exc()
                 print('Erro ao enviar a imagem')
                 print(f'Nome não encontrado: {nome}')
                 with open("names_not_found.txt", "a") as myfile:
                     myfile.write(f"Pessoa não encontrada: {nome}\n")
                 continue
     
-    def enviarMensagemImagem(self, nomes, mensagem, image_path):
+    def enviarMensagemImagem(self, nomes, image_paths, mensagem = None):
         time.sleep(18)
         for nome in nomes:
             try:
@@ -127,36 +127,49 @@ class WhatsappBot:
                     mensagem = (
                         textwrap.dedent(
                             f"""
-                            Olá {primeiro_nome}, 
-                            esse é uma mensagem de teste
+                            Olá {primeiro_nome}, a Cacau Show Plaza Shopping deseja um feliz hoje! 
+
+                            Nossa loja já está aberta, cheia dos deliciosos chocolates que você ama, com atendimento especializado, e montando kits e cestas especiais. Além disso, entregamos para você com todo o conforto e segurança. É tudo muito prático, rápido e feito com carinho.
+
+                            Faça já o seu pedido através da nossa plataforma de delivery ou por WhatsApp!
+
+                            Visite nossa página do Instagram para acessar os links do delivery na bio e confira nosso conteúdo
+
+                            @cacaushow.recife
+                            https://www.instagram.com/cacaushow.recife/?hl=pt-br
+
+                            Confira abaixo nosso catálogo
                             """
                         )
                     )
                 else:
-                    mensagem = mensagem.replace('primeiro_nome', primeiro_nome)
+                    mensagem.replace('primeiro_nome', primeiro_nome)
+                
                 mensagem = mensagem.replace('\n', enter_wpp()) 
                 
-                digitarComoHumano(mensagem, chat_box)
+                chat_box.send_keys(mensagem)
                 time.sleep(5)
                 botao_enviar = self.driver.find_element_by_xpath("//span[@data-icon='send']")
                 botao_enviar.click()
+
                 #Parte da imagem
-                time.sleep(2)
-                icone_clip = self.driver.find_element_by_xpath("//div[@title='Anexar']")
-                icone_clip.click()
-                
-                time.sleep(1)
-                icone_imagem = self.driver.find_element_by_xpath('//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
-                icone_imagem.send_keys(image_path)
+                for image_path in image_paths:
 
-                time.sleep(4)
-                send_button = self.driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/span/div/div/span')
-                send_button.click()
+                    time.sleep(2)
+                    icone_clip = self.driver.find_element_by_xpath("//div[@title='Anexar']")
+                    icone_clip.click()
+                    
+                    time.sleep(1)
+                    icone_imagem = self.driver.find_element_by_xpath('//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
+                    icone_imagem.send_keys(image_path)
 
-                time.sleep(2)
+                    time.sleep(4)
+                    send_button = self.driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/span/div/div/span')
+                    send_button.click()
+
+                    time.sleep(2)
                 self.count_mensagens += 1
             except Exception:
-                traceback.print_exc()
                 print(f'Nome não encontrado: {nome}')
                 with open("names_not_found.txt", "a") as myfile:
                     myfile.write(f"Pessoa não encontrada: {nome}\n")

@@ -1,4 +1,5 @@
 from bot_whatsapp import pd, WhatsappBot, date, time, textwrap
+import PySimpleGUI as sg
 from tkinter import Tk
 from tkinter.filedialog import askopenfile
 
@@ -52,19 +53,55 @@ def pedir_informacoes():
         opcao_mensagem = int(input('O que você deseja fazer:\n1 - Enviar mensagem e arquivo\n2 - Enviar só mensagem\n3 - Enviar só arquivo\n'))
 
         if opcao_mensagem == 1:
-            mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui\n')
-            print('Escolha o arquivo')
-            filepath = askopenfile()
-            filepath_send = filepath.name
+            # All the stuff inside your window.
+            layout = [  [sg.Text('Some text on Row 1')],
+                        [sg.Multiline(size=(40,20))],
+                        [sg.Button('Ok')] ]
+
+            # Create the Window
+            window = sg.Window('Mensagem', layout)
+            # Event Loop to process "events" and get the "values" of the inputs
+            while True:
+                event, values = window.read()
+                if event == sg.WIN_CLOSED or event == 'Ok': # if user closes window or clicks cancel
+                    print('You entered ', values[0])
+                    break
+
+            
+            num_files = int(input('Quantos arquivos você quer enviar?\n'))
+
+            list_filepath_send = []
+            for list_filepath in range(0,num_files):
+                print('Escolha o arquivo')
+                list_filepath = askopenfile()
+                list_filepath_send.append(list_filepath.name)
+            
+            window.close()
+            mensagem = values[0]
             bot2 = WhatsappBot()
-            bot2.enviarMensagemImagem(contatos, mensagem, filepath_send)
+            bot2.enviarMensagemImagem(contatos,list_filepath_send, mensagem)
             flag2 =True
             bot2.driver.quit()
             with open("number_msg_send.txt", "a") as myfile:
                 myfile.write(f"Número de mensagens enviadas: {bot2.count_mensagens}\n")
 
         elif opcao_mensagem == 2:
-            mensagem = input('Escreva a mensagem:\nDica: Escreva no bloco de notas depois cole aqui\n')
+            # All the stuff inside your window.
+            layout = [  [sg.Text('Some text on Row 1')],
+                        [sg.Multiline(size=(40,20))],
+                        [sg.Button('Ok')] ]
+
+            # Create the Window
+            window = sg.Window('Mensagem', layout)
+            # Event Loop to process "events" and get the "values" of the inputs
+            while True:
+                event, values = window.read()
+                if event == sg.WIN_CLOSED or event == 'Ok': # if user closes window or clicks cancel
+                    print('You entered ', values[0])
+                    break
+
+            window.close()
+            mensagem = values[0]
             bot2 = WhatsappBot()
             bot2.enviarMensagens(contatos, mensagem)
             flag2 = True
@@ -73,11 +110,15 @@ def pedir_informacoes():
                 myfile.write(f"Número de mensagens enviadas: {bot2.count_mensagens}\n")
 
         elif opcao_mensagem == 3:
-            print('Escolha o arquivo')
-            filepath = askopenfile()
-            filepath_send_2 = filepath.name
+            num_files = int(input('Quantos arquivos você quer enviar?\n'))
+
+            list_filepath_send2 = []
+            for list_filepath in range(0,num_files):
+                print('Escolha o arquivo')
+                list_filepath2 = askopenfile()
+                list_filepath_send2.append(list_filepath.name2)
             bot2 = WhatsappBot()
-            bot2.enviarImagem(contatos, filepath_send_2)
+            bot2.enviarImagem(contatos, list_filepath_send2)
             flag2 = True
             bot2.driver.quit()
             with open("number_msg_send.txt", "a") as myfile:
