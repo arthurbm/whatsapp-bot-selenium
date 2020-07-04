@@ -27,3 +27,6 @@ Pessoa não encontrada: TERCILIO CALSA JUNIOR CS PLZ 03
 Pessoa não encontrada: TEREZA CRISTINA LEITE GALINDO CS PLZ 03
 Pessoa não encontrada: TIAGO SILVA PALMEIRA CS PLZ 03
 Pessoa não encontrada: VALERIA DE FIGUEIREDO SALAZAR CS PLZ 03
+Pessoa não encontrada: Eu e eu mesmo
+Pessoa não encontrada: Eu e eu mesmo,Mãe
+Pessoa não encontrada: Eu e eu mesmo,Mãe
