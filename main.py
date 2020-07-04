@@ -129,13 +129,9 @@ def pedir_informacoes():
             break
 
         elif opcao_mensagem == 3:
-            num_files = int(input('Quantos arquivos você quer enviar?\n'))
+            num_files = num_arquivos()
 
-            list_filepath_send2 = []
-            for list_filepath in range(0,num_files):
-                print('Escolha o arquivo')
-                list_filepath2 = askopenfile()
-                list_filepath_send2.append(list_filepath.name2)
+            list_filepath_send2 = pedir_arquivos(num_files)
             bot2 = WhatsappBot()
             bot2.enviarImagem(contatos, list_filepath_send2)
             bot2.driver.quit()
