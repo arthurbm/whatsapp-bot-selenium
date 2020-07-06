@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import pandas as pd
 import textwrap
 import time
 from datetime import date
@@ -14,7 +13,7 @@ def colar_wpp():
 def digitarComoHumano(texto, campo):
         for letra in texto:
             campo.send_keys(letra)
-            time.sleep(randint(1,5)/900)
+            time.sleep(randint(1,5)/700)
 class WhatsappBot:
     def __init__(self):
         # Parte 1 - A mensagem que você quer enviar

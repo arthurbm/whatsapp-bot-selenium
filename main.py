@@ -1,19 +1,41 @@
-from bot_whatsapp import pd, WhatsappBot, date, time, textwrap
+from bot_whatsapp import WhatsappBot, date, time, textwrap
 import PySimpleGUI as sg
 from tkinter import Tk
 from tkinter.filedialog import askopenfile
+import csv
 
-def fazer_dados():
+def fazer_dados_certo():
     print('Escolha o arquivo CSV')
     filepath_global = askopenfile()
     filepath_name = filepath_global.name
-    df = pd.read_csv(filepath_name ,encoding='latin-1', sep=';')
+    list_names = []
+    with open(filepath_name) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        line_count = 0
+        for row in csv_reader:
+            if line_count == 0:
+                print(f'As colunas sao: {", ".join(row)}')
+                line_count += 1
+            else:
+                list_names.append(row[3])
+                line_count += 1
 
-    nomes_completos = df['NOME E SOBRENOME'].tolist()
+        print(f'Processed {line_count} lines.')
 
-    nomes_completos = sorted(nomes_completos, key = str.lower)
+    return list_names
 
-    return nomes_completos
+
+#def fazer_dados():
+#    print('Escolha o arquivo CSV')
+#    filepath_global = askopenfile()
+#    filepath_name = filepath_global.name
+#    df = pd.read_csv(filepath_name ,encoding='latin-1', sep=';')
+#
+#    nomes_completos = df['NOME E SOBRENOME'].tolist()
+#
+#    nomes_completos = sorted(nomes_completos, key = str.lower)
+#
+#    return nomes_completos
 
 def pedir_mensagem():
     # All the stuff inside your window.
@@ -90,7 +112,7 @@ def pedir_informacoes():
         opcao = int(input('Digite o número da opção escolhida para o formato que você quer fornecer o nome:\n1 - Arquivo CSV\n2 - Digitar os nomes\n'))
 
         if opcao == 1:
-            contatos = fazer_dados()
+            contatos = fazer_dados_certo()
             break
         elif opcao == 2:
             contatos = input("Digite os nomes exatamente como estão salvos nos contatos separados por uma /\nExemplo: Arthur Brito Medeiros/Pedro Medeiros/Isabela Campelo\n")
