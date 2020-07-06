@@ -17,7 +17,7 @@ def fazer_dados_certo():
                 print(f'As colunas sao: {", ".join(row)}')
                 line_count += 1
             else:
-                list_names.append(row[3])
+                list_names.append(f'{row[1]} {row[0]}')
                 line_count += 1
 
         print(f'Processed {line_count} lines.')
