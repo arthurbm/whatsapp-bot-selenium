@@ -54,9 +54,9 @@ def pedir_mensagem():
     return values[0]
     
 
-def num_arquivos():
+def num_inputs(msg):
     # All the stuff inside your window.
-    layout = [  [sg.Text('Quantos arquivos você quer enviar')],
+    layout = [  [sg.Text(msg)],
                 [sg.InputText()],
                 [sg.Button('Ok')] ]
 
@@ -115,8 +115,8 @@ def pedir_informacoes():
             contatos = fazer_dados_certo()
             break
         elif opcao == 2:
-            contatos = input("Digite os nomes exatamente como estão salvos nos contatos separados por uma /\nExemplo: Arthur Brito Medeiros/Pedro Medeiros/Isabela Campelo\n")
-            contatos = contatos.split('/')
+            contatos = input("Digite os nomes exatamente como estão salvos nos contatos separados por ,\nExemplo: Arthur Brito Medeiros,Pedro Medeiros,Isabela Campelo\n")
+            contatos = contatos.split(',')
             break
         else:
             print('Opção inválida, escolha novamente')
@@ -129,7 +129,7 @@ def pedir_informacoes():
         if opcao_mensagem == 1:
             mensagem = pedir_mensagem()
             
-            num_files = num_arquivos()
+            num_files = num_inputs('Quantos arquivos você quer enviar')
 
             list_filepath_send = pedir_arquivos(num_files)
 
@@ -151,7 +151,7 @@ def pedir_informacoes():
             break
 
         elif opcao_mensagem == 3:
-            num_files = num_arquivos()
+            num_files = num_inputs('Quantos arquivos você quer enviar')
 
             list_filepath_send2 = pedir_arquivos(num_files)
             bot2 = WhatsappBot()

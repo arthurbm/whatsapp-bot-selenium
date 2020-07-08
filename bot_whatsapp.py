@@ -52,6 +52,8 @@ class WhatsappBot:
                             """
                         )
                     )
+                else:
+                    mensagem.replace('primeiro_nome', primeiro_nome)
                 mensagem = mensagem.replace('\n', enter_wpp())
                 
                 chat_box.send_keys(mensagem)
