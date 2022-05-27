@@ -1,3 +1,4 @@
+from distutils.log import error
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import textwrap
@@ -18,13 +19,20 @@ class WhatsappBot:
     def __init__(self):
         # Parte 1 - A mensagem que você quer enviar
         # Parte 2 - Nome dos grupos ou pessoas a quem você deseja enviar a mensagem
-        self.driver = webdriver.Chrome(executable_path='./chromedriver.exe')
+        self.driver = webdriver.Chrome(executable_path='./chromedriver')
         self.driver.get('https://web.whatsapp.com')
         self.count_mensagens = 0
         self.count_erros = 0
+        self.lorem = textwrap.dedent(
+          f"""
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum imperdiet massa ac venenatis. Integer blandit lacus sit amet dolor lacinia viverra. Vestibulum quam odio, feugiat sit amet convallis ut, facilisis fringilla lectus. Duis a leo rutrum, ultrices ipsum vitae, ultricies tortor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce vulputate elit turpis. Nullam dictum eros et odio laoreet, sed ultrices mi lacinia.
+
+          Ut malesuada elit erat, et ultricies urna suscipit et. Nullam at magna velit. Vivamus cursus, felis ut semper mattis, urna ex pulvinar eros, at interdum orci neque vel neque. In hac habitasse platea dictumst. Sed egestas volutpat ipsum tincidunt tempus. Aenean a nunc a mauris accumsan condimentum. Pellentesque placerat mauris ac vestibulum scelerisque. Nam ligula elit, pharetra non lacus vel, vestibulum finibus libero. In nunc libero, iaculis at mollis nec, auctor at turpis. Maecenas in egestas erat. Phasellus tellus augue, scelerisque quis felis tincidunt, consequat sodales lectus. Duis iaculis, lacus ut fringilla lacinia, arcu orci feugiat tortor, eu luctus tellus sapien et lacus. Nam nec nibh augue. Mauris ac convallis ex. Vivamus sit amet quam vitae elit euismod venenatis at vel turpis. Donec auctor fringilla metus, quis aliquam leo feugiat eget.
+          """
+        )
     
     def enviarMensagens(self,nomes, mensagem=None):
-        time.sleep(18)
+        time.sleep(30)
         for nome in nomes:
             try:
                 time.sleep(2)
@@ -33,33 +41,23 @@ class WhatsappBot:
                 icone_pesquisa = self.driver.find_element_by_xpath("//span[@data-icon='search']")
                 icone_pesquisa.click()
                 time.sleep(2)
-                campo_pesquisa = self.driver.find_element_by_xpath('//*[@id="side"]/div[1]/div/label/div/div[2]')
+                campo_pesquisa = self.driver.find_element_by_xpath('//*[@id="side"]/div[1]/div/div/div[2]/div/div[2]')
                 campo_pesquisa.click()
-                campo_pesquisa.send_keys(nome)
+                campo_pesquisa.send_keys(primeiro_nome)
                 time.sleep(2)
-                campo_grupo = self.driver.find_element_by_xpath(f"//span[@title='{nome}'][@class='_3ko75 _5h6Y_ _3Whw5']")
+                campo_grupo = self.driver.find_element_by_xpath(f"//span[@title='{nome}'][@class='ggj6brxn gfz4du6o r7fjleex g0rxnol2 lhj4utae le5p0ye3 l7jjieqr i0jNr']")
                 campo_grupo.click()
                 time.sleep(3)
-                chat_box = self.driver.find_element_by_class_name('_3uMse')
+                chat_box = self.driver.find_element_by_xpath('//div[@title="Mensagem"][@class="_13NKt copyable-text selectable-text"]')
+                # chat_box = self.driver.find_element_by_class_name('_13NKt')
                 chat_box.click()
                 if mensagem == None:
-                    mensagem = (
-                        textwrap.dedent(
-                            f"""
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum imperdiet massa ac venenatis. Integer blandit lacus sit amet dolor lacinia viverra. Vestibulum quam odio, feugiat sit amet convallis ut, facilisis fringilla lectus. Duis a leo rutrum, ultrices ipsum vitae, ultricies tortor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce vulputate elit turpis. Nullam dictum eros et odio laoreet, sed ultrices mi lacinia.
-
-                            Ut malesuada elit erat, et ultricies urna suscipit et. Nullam at magna velit. Vivamus cursus, felis ut semper mattis, urna ex pulvinar eros, at interdum orci neque vel neque. In hac habitasse platea dictumst. Sed egestas volutpat ipsum tincidunt tempus. Aenean a nunc a mauris accumsan condimentum. Pellentesque placerat mauris ac vestibulum scelerisque. Nam ligula elit, pharetra non lacus vel, vestibulum finibus libero. In nunc libero, iaculis at mollis nec, auctor at turpis. Maecenas in egestas erat. Phasellus tellus augue, scelerisque quis felis tincidunt, consequat sodales lectus. Duis iaculis, lacus ut fringilla lacinia, arcu orci feugiat tortor, eu luctus tellus sapien et lacus. Nam nec nibh augue. Mauris ac convallis ex. Vivamus sit amet quam vitae elit euismod venenatis at vel turpis. Donec auctor fringilla metus, quis aliquam leo feugiat eget.
-                            """
-                        )
-                    )
-                else:
-                    mensagem.replace('primeiro_nome', primeiro_nome)
+                    raise ValueError('Mensagem não definida')
+                mensagem = mensagem.replace('primeiro_nome', primeiro_nome)
                 mensagem = mensagem.replace('\n', enter_wpp())
                 
-                chat_box.send_keys(mensagem)
+                chat_box.send_keys(mensagem + Keys.ENTER)
                 time.sleep(5)
-                botao_enviar = self.driver.find_element_by_xpath("//span[@data-icon='send']")
-                botao_enviar.click()
                 self.count_mensagens += 1
             except Exception:
                 print('Erro ao enviar a mensagem')
