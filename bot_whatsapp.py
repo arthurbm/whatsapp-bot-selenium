@@ -31,13 +31,17 @@ class WhatsappBot:
           """
         )
     
-    def enviarMensagens(self,nomes, mensagem=None):
-        time.sleep(30)
+    def enviarMensagens(self,nomes: str, mensagem=None):
+        flah_continue = input('Deseja continuar? (s/n)')
+        if flah_continue == 'n':
+            return
+        mensagemLocal = ''
         for nome in nomes:
             try:
                 time.sleep(2)
 
-                primeiro_nome = ((nome.split())[0]).capitalize()
+                primeiro_nome = nome.capitalize()
+                print(primeiro_nome)
                 icone_pesquisa = self.driver.find_element_by_xpath("//span[@data-icon='search']")
                 icone_pesquisa.click()
                 time.sleep(2)
@@ -53,13 +57,15 @@ class WhatsappBot:
                 chat_box.click()
                 if mensagem == None:
                     raise ValueError('Mensagem não definida')
+                # print('opa' + mensagem)
                 mensagem = mensagem.replace('primeiro_nome', primeiro_nome)
                 mensagem = mensagem.replace('\n', enter_wpp())
                 
-                chat_box.send_keys(mensagem + Keys.ENTER)
+                # chat_box.send_keys(mensagemLocal + Keys.ENTER)
                 time.sleep(5)
                 self.count_mensagens += 1
-            except Exception:
+            except Exception as e:
+                print(e)
                 print('Erro ao enviar a mensagem')
                 print(f'Nome não encontrado: {nome}')
                 with open("names_not_found.txt", "a") as myfile:
