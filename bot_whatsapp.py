@@ -42,28 +42,27 @@ class WhatsappBot:
         flah_continue = input('Deseja continuar? (s/n)')
         if flah_continue == 'n':
             return
-        mensagemLocal = ''
         for nome in nomes:
             try:
                 time.sleep(2)
 
                 primeiro_nome = nome.capitalize()
                 print(primeiro_nome)
-                icone_pesquisa = self.driver.find_element_by_xpath(
-                    "//span[@data-icon='search']")
+                icone_pesquisa = self.driver.find_element("xpath",
+                                                          "//span[@data-icon='search']")
                 icone_pesquisa.click()
                 time.sleep(2)
-                campo_pesquisa = self.driver.find_element_by_xpath(
-                    '//*[@id="side"]/div[1]/div/div/div[2]/div/div[2]')
+                campo_pesquisa = self.driver.find_element("xpath",
+                                                          '//*[@id="side"]/div[1]/div/div/div[2]/div')
                 campo_pesquisa.click()
                 campo_pesquisa.send_keys(primeiro_nome)
                 time.sleep(2)
-                campo_grupo = self.driver.find_element_by_xpath(
-                    f"//span[@title='{nome}'][@class='ggj6brxn gfz4du6o r7fjleex g0rxnol2 lhj4utae le5p0ye3 l7jjieqr i0jNr']")
+                campo_grupo = self.driver.find_element("xpath",
+                                                       f"//span[@title='{nome}'][@class='ggj6brxn gfz4du6o r7fjleex g0rxnol2 lhj4utae le5p0ye3 l7jjieqr i0jNr']")
                 campo_grupo.click()
                 time.sleep(3)
-                chat_box = self.driver.find_element_by_xpath(
-                    '//div[@title="Mensagem"][@class="_13NKt copyable-text selectable-text"]')
+                chat_box = self.driver.find_element("xpath",
+                                                    '//div[@title="Mensagem"][@class="_13NKt copyable-text selectable-text"]')
                 # chat_box = self.driver.find_element_by_class_name('_13NKt')
                 chat_box.click()
                 if mensagem == None:
@@ -87,35 +86,35 @@ class WhatsappBot:
         time.sleep(18)
         for nome in nomes:
             try:
-                icone_pesquisa = self.driver.find_element_by_xpath(
-                    "//span[@data-icon='search']")
+                icone_pesquisa = self.driver.find_element("xpath",
+                                                          "//span[@data-icon='search']")
                 icone_pesquisa.click()
                 time.sleep(2)
-                campo_pesquisa = self.driver.find_element_by_xpath(
-                    '//*[@id="side"]/div[1]/div/label/div/div[2]')
+                campo_pesquisa = self.driver.find_element("xpath",
+                                                          '//*[@id="side"]/div[1]/div/label/div/div[2]')
                 campo_pesquisa.click()
                 campo_pesquisa.send_keys(nome)
                 time.sleep(2)
-                campo_grupo = self.driver.find_element_by_xpath(
-                    f"//span[@title='{nome}'][@class='_3ko75 _5h6Y_ _3Whw5']")
+                campo_grupo = self.driver.find_element("xpath",
+                                                       f"//span[@title='{nome}'][@class='_3ko75 _5h6Y_ _3Whw5']")
                 campo_grupo.click()
                 time.sleep(3)
 
                 for image_path in image_paths:
 
                     time.sleep(2)
-                    icone_clip = self.driver.find_element_by_xpath(
-                        "//div[@title='Anexar']")
+                    icone_clip = self.driver.find_element("xpath",
+                                                          "//div[@title='Anexar']")
                     icone_clip.click()
 
                     time.sleep(1)
-                    icone_imagem = self.driver.find_element_by_xpath(
-                        '//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
+                    icone_imagem = self.driver.find_element("xpath",
+                                                            '//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
                     icone_imagem.send_keys(image_path)
 
                     time.sleep(4)
-                    send_button = self.driver.find_element_by_xpath(
-                        '//*[@id="app"]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/span/div/div/span')
+                    send_button = self.driver.find_element("xpath",
+                                                           '//*[@id="app"]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/span/div/div/span')
                     send_button.click()
 
                     time.sleep(2)
@@ -133,17 +132,17 @@ class WhatsappBot:
             try:
                 # Parte da mensagem
                 primeiro_nome = ((nome.split())[0]).capitalize()
-                icone_pesquisa = self.driver.find_element_by_xpath(
-                    "//span[@data-icon='search']")
+                icone_pesquisa = self.driver.find_element("xpath",
+                                                          "//span[@data-icon='search']")
                 icone_pesquisa.click()
                 time.sleep(2)
-                campo_pesquisa = self.driver.find_element_by_xpath(
-                    '//*[@id="side"]/div[1]/div/label/div/div[2]')
+                campo_pesquisa = self.driver.find_element("xpath",
+                                                          '//*[@id="side"]/div[1]/div/label/div/div[2]')
                 campo_pesquisa.click()
                 campo_pesquisa.send_keys(nome)
                 time.sleep(2)
-                campo_grupo = self.driver.find_element_by_xpath(
-                    f"//span[@title='{nome}'][@class='_3ko75 _5h6Y_ _3Whw5']")
+                campo_grupo = self.driver.find_element("xpath",
+                                                       f"//span[@title='{nome}'][@class='_3ko75 _5h6Y_ _3Whw5']")
                 campo_grupo.click()
                 time.sleep(3)
                 chat_box = self.driver.find_element_by_class_name('_3uMse')
@@ -174,26 +173,26 @@ class WhatsappBot:
 
                 chat_box.send_keys(mensagem)
                 time.sleep(5)
-                botao_enviar = self.driver.find_element_by_xpath(
-                    "//span[@data-icon='send']")
+                botao_enviar = self.driver.find_element("xpath",
+                                                        "//span[@data-icon='send']")
                 botao_enviar.click()
 
                 # Parte da imagem
                 for image_path in image_paths:
 
                     time.sleep(2)
-                    icone_clip = self.driver.find_element_by_xpath(
-                        "//div[@title='Anexar']")
+                    icone_clip = self.driver.find_element("xpath",
+                                                          "//div[@title='Anexar']")
                     icone_clip.click()
 
                     time.sleep(1)
-                    icone_imagem = self.driver.find_element_by_xpath(
-                        '//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
+                    icone_imagem = self.driver.find_element("xpath",
+                                                            '//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
                     icone_imagem.send_keys(image_path)
 
                     time.sleep(4)
-                    send_button = self.driver.find_element_by_xpath(
-                        '//*[@id="app"]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/span/div/div/span')
+                    send_button = self.driver.find_element("xpath",
+                                                           '//*[@id="app"]/div/div/div[2]/div[2]/span/div/span/div/div/div[2]/span/div/div/span')
                     send_button.click()
 
                     time.sleep(2)
