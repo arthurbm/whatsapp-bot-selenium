@@ -6,6 +6,7 @@ import time
 from datetime import date
 from random import randint
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.common.exceptions import NoSuchElementException
 
 
 def enter_wpp():
@@ -38,49 +39,58 @@ class WhatsappBot:
           """
         )
 
-    def enviarMensagens(self, nomes: str, mensagem=None):
-        flah_continue = input('Deseja continuar? (s/n)')
-        if flah_continue == 'n':
+    def enviarMensagens(self, nomes: list[str], mensagem: str = None):
+        flag_continue = input('Deseja continuar? (s/n)')
+        if flag_continue == 'n':
             return
+
         for nome in nomes:
             try:
                 time.sleep(2)
 
                 primeiro_nome = nome.capitalize()
                 print(primeiro_nome)
-                icone_pesquisa = self.driver.find_element("xpath",
-                                                          "//span[@data-icon='search']")
+
+                icone_pesquisa = self.driver.find_element(
+                    "xpath", "//span[@data-icon='search']")
                 icone_pesquisa.click()
                 time.sleep(2)
-                campo_pesquisa = self.driver.find_element("xpath",
-                                                          '//*[@id="side"]/div[1]/div/div/div[2]/div')
+
+                campo_pesquisa = self.driver.find_element(
+                    "xpath", '//*[@id="side"]/div[1]/div/div/div[2]/div/div[1]')
                 campo_pesquisa.click()
                 campo_pesquisa.send_keys(primeiro_nome)
                 time.sleep(2)
-                campo_grupo = self.driver.find_element("xpath",
-                                                       f"//span[@title='{nome}'][@class='ggj6brxn gfz4du6o r7fjleex g0rxnol2 lhj4utae le5p0ye3 l7jjieqr i0jNr']")
+
+                campo_grupo = self.driver.find_element(
+                    "xpath", f"//span[@title='{nome}'][@class='ggj6brxn gfz4du6o r7fjleex g0rxnol2 lhj4utae le5p0ye3 l7jjieqr _11JPr']")
                 campo_grupo.click()
                 time.sleep(3)
-                chat_box = self.driver.find_element("xpath",
-                                                    '//div[@title="Mensagem"][@class="_13NKt copyable-text selectable-text"]')
-                # chat_box = self.driver.find_element_by_class_name('_13NKt')
+
+                chat_box = self.driver.find_element(
+                    "xpath", '//div[@title="Mensagem"]')
                 chat_box.click()
-                if mensagem == None:
+
+                if mensagem is None:
                     raise ValueError('Mensagem não definida')
-                # print('opa' + mensagem)
+
                 mensagem = mensagem.replace('primeiro_nome', primeiro_nome)
                 mensagem = mensagem.replace('\n', enter_wpp())
 
-                # chat_box.send_keys(mensagemLocal + Keys.ENTER)
+                chat_box.send_keys(mensagem + Keys.ENTER)
                 time.sleep(5)
+
                 self.count_mensagens += 1
-            except Exception as e:
-                print(e)
-                print('Erro ao enviar a mensagem')
+
+            except NoSuchElementException:
                 print(f'Nome não encontrado: {nome}')
                 with open("names_not_found.txt", "a") as myfile:
                     myfile.write(f"Pessoa não encontrada: {nome}\n")
-                continue
+
+            except Exception as e:
+                print(f'Erro ao enviar a mensagem: {e}')
+
+        return
 
     def enviarImagem(self, nomes, image_paths):
         time.sleep(18)
