@@ -77,7 +77,9 @@ class WhatsappBot:
                 mensagem = mensagem.replace('primeiro_nome', primeiro_nome)
                 mensagem = mensagem.replace('\n', enter_wpp())
 
-                chat_box.send_keys(mensagem + Keys.ENTER)
+                # chat_box.send_keys(mensagem + Keys.ENTER)
+                
+                digitarComoHumano(mensagem + Keys.ENTER, chat_box)
                 time.sleep(5)
 
                 self.count_mensagens += 1
